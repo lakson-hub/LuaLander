@@ -56,6 +56,7 @@ public class Lander : MonoBehaviour {
             Debug.Log("Crashed on the Terrain!");
             return;
         }
+        
         float softLandingVelocityMagnitude = 4f;
         float relativeVelocityMagnitude = collision2D.relativeVelocity.magnitude;
         if (relativeVelocityMagnitude > softLandingVelocityMagnitude) {
@@ -88,6 +89,14 @@ public class Lander : MonoBehaviour {
         int score = Mathf.RoundToInt((landingAngleScore + landingSpeedScore) * landingPad.GetScoreMultiplier());
         
         Debug.Log("Score: " + score);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider2D) {
+        if (collider2D.gameObject.TryGetComponent(out FuelPickup fuelPickup)) {
+            float addFuelAmount = 10f;
+            fuelAmount += addFuelAmount;
+            fuelPickup.DestroySelf();
+        }
     }
 
     private void ConsumeFuel() {
