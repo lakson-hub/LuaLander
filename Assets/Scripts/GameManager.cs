@@ -2,13 +2,16 @@ using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-
-    [SerializeField] private Lander lander;
-
+    
     private int score;
 
     private void Start() {
-        lander.OnCoinPickup += Lander_OnCoinPickup;
+        Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
+        Lander.Instance.OnLanded += Instance_OnLanded;
+    }
+
+    private void Instance_OnLanded(object sender, Lander.OnLandedEventArgs e) {
+        AddScore(e.score);
     }
 
     private void Lander_OnCoinPickup(object sender, EventArgs e) {
