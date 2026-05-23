@@ -2996,6 +2996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LandedUI
   titleTextMesh: {fileID: 1820381500}
   statsTextMesh: {fileID: 1681712695}
+  nextButtonTextMesh: {fileID: 1977504522}
   nextButton: {fileID: 630078271}
 --- !u!1 &2140164160
 GameObject:
