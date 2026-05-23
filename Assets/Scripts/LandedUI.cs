@@ -41,7 +41,7 @@ public class LandedUI : MonoBehaviour {
             Mathf.Round(e.landingSpeed * 2f) + "\n" +
             Mathf.Round(e.dotVector * 100f) + "\n" +
             "x" + e.scoreMultiplier + "\n" + 
-            e.score;
+            (e.landingType == Lander.LandingType.Success ? GameManager.Instance.GetScore() : 0);
         
         Show();
     }
