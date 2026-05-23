@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] private int levelNumber;
+    [SerializeField] private List<GameLevel> gameLevelList;
     
     private int score;
     private float time;
@@ -17,6 +21,8 @@ public class GameManager : MonoBehaviour {
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
         Lander.Instance.OnLanded += Instance_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
+
+        LoadCurrentLevel();
     }
 
     private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventsArgs e) {
@@ -29,6 +35,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void LoadCurrentLevel() {
+        foreach (GameLevel gameLevel in gameLevelList) {
+            if (gameLevel.GetLevelNumber() == levelNumber) {
+                GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
+                Lander.Instance.transform.position = spawnedGameLevel.GetLanderStartPosition();
+            }
+        }
+    }
+    
     private void Instance_OnLanded(object sender, Lander.OnLandedEventArgs e) {
         AddScore(e.score);
     }
