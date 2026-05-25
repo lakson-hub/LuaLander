@@ -75,4 +75,8 @@ public class GameManager : MonoBehaviour {
     public void RetryLevel() {
         SceneManager.LoadScene(0);
     }
+
+    public int GetLevelNumber() {
+        return levelNumber;
+    }
 }
