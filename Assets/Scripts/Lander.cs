@@ -63,7 +63,8 @@ public class Lander : MonoBehaviour {
             case State.WaitingToStart:
                 if (GameInput.Instance.IsUpActionPressed() ||
                     GameInput.Instance.IsRightActionPressed() ||
-                    GameInput.Instance.IsLeftActionPressed()) {
+                    GameInput.Instance.IsLeftActionPressed() ||
+                    GameInput.Instance.GetMovementInputVector2() != Vector2.zero) {
                     // Pressing any input
                     landerRigidbody2D.gravityScale = GRAVITY_NORMAL;
                     SetState(State.Normal);
@@ -78,24 +79,26 @@ public class Lander : MonoBehaviour {
         
                 if (GameInput.Instance.IsUpActionPressed() ||
                     GameInput.Instance.IsRightActionPressed() ||
-                    GameInput.Instance.IsLeftActionPressed()) {
+                    GameInput.Instance.IsLeftActionPressed() ||
+                    GameInput.Instance.GetMovementInputVector2() != Vector2.zero) {
                     // Pressing any input
                     ConsumeFuel();
                 }
-        
-                if (GameInput.Instance.IsUpActionPressed()) {
+
+                float gamepadDeadone = .4f;
+                if (GameInput.Instance.IsUpActionPressed() || GameInput.Instance.GetMovementInputVector2().y > gamepadDeadone) {
                     float force = 700f;
                     landerRigidbody2D.AddForce(transform.up * (force * Time.deltaTime));
                     OnUpForce?.Invoke(this, EventArgs.Empty);
                 }
         
-                if (GameInput.Instance.IsLeftActionPressed()) {
+                if (GameInput.Instance.IsLeftActionPressed() || GameInput.Instance.GetMovementInputVector2().x < -gamepadDeadone) {
                     float turnSpeed = +100f;
                     landerRigidbody2D.AddTorque(turnSpeed * Time.deltaTime);
                     OnLeftForce?.Invoke(this, EventArgs.Empty);
                 }
         
-                if (GameInput.Instance.IsRightActionPressed()) {
+                if (GameInput.Instance.IsRightActionPressed() || GameInput.Instance.GetMovementInputVector2().x > gamepadDeadone) {
                     float turnSpeed = -100f;
                     landerRigidbody2D.AddTorque(turnSpeed * Time.deltaTime);
                     OnRightForce?.Invoke(this, EventArgs.Empty);
