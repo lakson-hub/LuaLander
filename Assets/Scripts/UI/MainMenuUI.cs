@@ -19,4 +19,8 @@ public class MainMenuUI : MonoBehaviour {
             Application.Quit();
         });
     }
+
+    private void Start() {
+        playButton.Select();
+    }
 }
