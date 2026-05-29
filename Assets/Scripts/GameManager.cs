@@ -78,11 +78,11 @@ public class GameManager : MonoBehaviour {
 
     public void GoToNextLevel() {
         levelNumber++;
-        SceneManager.LoadScene(0);
+        SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
     }
 
     public void RetryLevel() {
-        SceneManager.LoadScene(0);
+        SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
     }
 
     public int GetLevelNumber() {
