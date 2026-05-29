@@ -53,14 +53,21 @@ public class GameManager : MonoBehaviour {
     }
 
     private void LoadCurrentLevel() {
+        GameLevel gameLevel = GetGameLevel();
+        GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
+        Lander.Instance.transform.position = spawnedGameLevel.GetLanderStartPosition();
+        cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.GetCameraStartTargetTransform();
+        CinemachineCameraZoom2D.Instance.SetTargetOrthographicSize(spawnedGameLevel.GetZoomedOutOrthographicSize());
+    }
+
+    private GameLevel GetGameLevel() {
         foreach (GameLevel gameLevel in gameLevelList) {
             if (gameLevel.GetLevelNumber() == levelNumber) {
-                GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
-                Lander.Instance.transform.position = spawnedGameLevel.GetLanderStartPosition();
-                cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.GetCameraStartTargetTransform();
-                CinemachineCameraZoom2D.Instance.SetTargetOrthographicSize(spawnedGameLevel.GetZoomedOutOrthographicSize());
+                return gameLevel;
             }
         }
+
+        return null;
     }
     
     private void Instance_OnLanded(object sender, Lander.OnLandedEventArgs e) {
@@ -91,7 +98,15 @@ public class GameManager : MonoBehaviour {
     public void GoToNextLevel() {
         levelNumber++;
         totalScore += score;
-        SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
+
+        if (GetGameLevel() == null) {
+            // No more levels
+            SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
+        }
+        else {
+            // We still have more levels
+            SceneLoader.LoadScene(SceneLoader.Scene.GameScene);   
+        }
     }
 
     public void RetryLevel() {
