@@ -8,13 +8,14 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
     private static int levelNumber = 1;
+    private static int totalScore = 0;
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
     
     [SerializeField] private List<GameLevel> gameLevelList;
     [SerializeField] private CinemachineCamera cinemachineCamera;
-    
+
     private int score;
     private float time;
     private bool isTimerActive;
@@ -83,8 +84,13 @@ public class GameManager : MonoBehaviour {
         return time;
     }
 
+    public int GetTotalScore() {
+        return totalScore;
+    }
+
     public void GoToNextLevel() {
         levelNumber++;
+        totalScore += score;
         SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
     }
 
