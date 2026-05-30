@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2589161344156904143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8009256161135735448}
+  m_Layer: 0
+  m_Name: LandingPads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8009256161135735448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589161344156904143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8296440006981031987}
+  - {fileID: 205597956087364598}
+  m_Father: {fileID: 694346828413184092}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4468454542500012381
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,10 +126,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2014173045091115740}
-  - {fileID: 8296440006981031987}
-  - {fileID: 205597956087364598}
-  - {fileID: 9190072071880718102}
-  - {fileID: 942145321328043980}
+  - {fileID: 8009256161135735448}
+  - {fileID: 8975227478996258102}
   - {fileID: 5374797138705009340}
   - {fileID: 17474010063934863}
   - {fileID: 2958478483968977286}
@@ -444,13 +475,46 @@ PolygonCollider2D:
       - {x: 30.515995, y: -7.323088}
       - {x: -1.8644719, y: -7.484176}
   m_UseDelaunayMesh: 1
+--- !u!1 &7968885846634862995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8975227478996258102}
+  m_Layer: 0
+  m_Name: FuelPickups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8975227478996258102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7968885846634862995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9190072071880718102}
+  - {fileID: 942145321328043980}
+  m_Father: {fileID: 694346828413184092}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &484744862591928828
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 694346828413184092}
+    m_TransformParent: {fileID: 8975227478996258102}
     m_Modifications:
     - target: {fileID: 840208095974075952, guid: e0627bb0c7d6150409b4fc7f776615c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -512,7 +576,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 694346828413184092}
+    m_TransformParent: {fileID: 8009256161135735448}
     m_Modifications:
     - target: {fileID: 4198377174674855397, guid: c010abedda504914a8a727f9eda2f67d, type: 3}
       propertyPath: m_Name
@@ -636,7 +700,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 694346828413184092}
+    m_TransformParent: {fileID: 8009256161135735448}
     m_Modifications:
     - target: {fileID: 3333877498330117237, guid: d99e50bf77e905248bdab97bdc50abd0, type: 3}
       propertyPath: m_Name
@@ -698,7 +762,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 694346828413184092}
+    m_TransformParent: {fileID: 8975227478996258102}
     m_Modifications:
     - target: {fileID: 840208095974075952, guid: e0627bb0c7d6150409b4fc7f776615c2, type: 3}
       propertyPath: m_LocalPosition.x
