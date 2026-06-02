@@ -4,6 +4,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
     private const int SOUND_VOLUME_MAX = 10;
+    private const string PREFS_SOUND_VOLUME = "SoundVolume";
     
     public static SoundManager Instance { get; private set; }
     
@@ -18,6 +19,9 @@ public class SoundManager : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+
+        soundVolume = PlayerPrefs.GetInt(PREFS_SOUND_VOLUME, 5);
+        soundVolume = Mathf.Clamp(soundVolume, 0, SOUND_VOLUME_MAX - 1);
     }
 
     private void Start() {
@@ -47,6 +51,10 @@ public class SoundManager : MonoBehaviour {
 
     public void ChangeSoundVolume() {
         soundVolume = (soundVolume + 1) % SOUND_VOLUME_MAX;
+        
+        PlayerPrefs.SetInt(PREFS_SOUND_VOLUME, soundVolume);
+        PlayerPrefs.Save();
+        
         OnSoundVolumeChanged?.Invoke(this, EventArgs.Empty);
     }
 
