@@ -7,16 +7,24 @@ public class GameManager : MonoBehaviour {
     
     public static GameManager Instance { get; private set; }
 
+    private const int MAX_LIVES = 3;
+
     private static int levelNumber = 1;
     private static int totalScore = 0;
+    private static int livesRemaining = MAX_LIVES;
 
     public static void ResetStaticData() {
         levelNumber = 1;
         totalScore = 0;
+        livesRemaining = MAX_LIVES;
     }
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
+    public event EventHandler<OnLivesChangedEventArgs> OnLivesChanged;
+    public class OnLivesChangedEventArgs : EventArgs {
+        public int livesRemaining;
+    }
     
     [SerializeField] private List<GameLevel> gameLevelList;
     [SerializeField] private CinemachineCamera cinemachineCamera;
@@ -31,7 +39,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
-        Lander.Instance.OnLanded += Instance_OnLanded;
+        Lander.Instance.OnLanded += Lander_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
 
         GameInput.Instance.OnMenuButtonPressed += GameInput_OnMenuButtonPressed;
@@ -75,7 +83,15 @@ public class GameManager : MonoBehaviour {
         return null;
     }
     
-    private void Instance_OnLanded(object sender, Lander.OnLandedEventArgs e) {
+    private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e) {
+        if (e.landingType != Lander.LandingType.Success) {
+            LoseLife();
+            if (GetRemainingLives() <= 0) {
+                GoToGameOver();
+                return;
+            }
+        }
+
         AddScore(e.score);
     }
 
@@ -118,6 +134,10 @@ public class GameManager : MonoBehaviour {
         SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
     }
 
+    public void GoToGameOver() {
+        SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
+    }
+
     public int GetLevelNumber() {
         return levelNumber;
     }
@@ -139,5 +159,16 @@ public class GameManager : MonoBehaviour {
     public void UnpauseGame() {
         Time.timeScale = 1f;
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+    }
+
+    public int GetRemainingLives() {
+        return livesRemaining;
+    }
+
+    private void LoseLife() {
+        livesRemaining--;
+        OnLivesChanged?.Invoke(this, new OnLivesChangedEventArgs {
+            livesRemaining = livesRemaining
+        });
     }
 }

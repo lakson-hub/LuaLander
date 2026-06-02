@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(100)]
 public class LandedUI : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI titleTextMesh;
@@ -31,6 +32,9 @@ public class LandedUI : MonoBehaviour {
             nextButtonClickAction = GameManager.Instance.GoToNextLevel;
         }
         else {
+            if (GameManager.Instance.GetRemainingLives() <= 0) {
+                return;
+            }
             titleTextMesh.text = "<color=#ff0000>CRASH!</color>";
             nextButtonTextMesh.text = "RETRY";
             nextButtonClickAction = GameManager.Instance.RetryLevel;
@@ -39,8 +43,9 @@ public class LandedUI : MonoBehaviour {
         statsTextMesh.text =
             Mathf.Round(e.landingSpeed * 2f) + "\n" +
             Mathf.Round(e.dotVector * 100f) + "\n" +
-            "x" + e.scoreMultiplier + "\n" + 
-            (e.landingType == Lander.LandingType.Success ? GameManager.Instance.GetScore() : 0);
+            "x" + e.scoreMultiplier + "\n" +
+            (e.landingType == Lander.LandingType.Success ? GameManager.Instance.GetScore() : 0) + "\n" +
+            GameManager.Instance.GetRemainingLives();
         
         Show();
     }

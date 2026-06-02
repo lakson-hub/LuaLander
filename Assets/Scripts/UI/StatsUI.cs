@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,14 @@ public class StatsUI : MonoBehaviour {
     [SerializeField] private GameObject speedLeftArrowGameObject;
     [SerializeField] private GameObject speedRightArrowGameObject;
     [SerializeField] private Image fuelImage;
+
+    private void Start() {
+        GameManager.Instance.OnLivesChanged += GameManager_OnLivesChanged;
+    }
+
+    private void GameManager_OnLivesChanged(object sender, GameManager.OnLivesChangedEventArgs e) {
+        UpdateStatsTextMesh();
+    }
 
     private void Update() {
         UpdateStatsTextMesh();
@@ -27,6 +36,8 @@ public class StatsUI : MonoBehaviour {
                              GameManager.Instance.GetScore() + "\n" +
                              Mathf.Round(GameManager.Instance.GetTime()) + "\n" +
                              Mathf.Abs(Mathf.Round(Lander.Instance.GetSpeedX() * 10f)) + "\n" +
-                             Mathf.Abs(Mathf.Round(Lander.Instance.GetSpeedY() * 10f));
+                             Mathf.Abs(Mathf.Round(Lander.Instance.GetSpeedY() * 10f)) + "\n" +
+                             "\n" +
+                             GameManager.Instance.GetRemainingLives();
     }
 }
