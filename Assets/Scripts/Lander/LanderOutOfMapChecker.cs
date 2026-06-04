@@ -15,10 +15,6 @@ public class LanderOutOfMapChecker : MonoBehaviour {
             return;
         }
 
-        if (Lander.Instance == null) {
-            return;
-        }
-
         if (Lander.Instance.GetState() != Lander.State.Normal) {
             return;
         }
