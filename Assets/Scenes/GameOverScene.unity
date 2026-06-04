@@ -518,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOverUI
   mainMenuButton: {fileID: 205355310}
   scoreTextMesh: {fileID: 912421616}
+  gameOverTextMesh: {fileID: 1848767016}
 --- !u!1 &912421614
 GameObject:
   m_ObjectHideFlags: 0

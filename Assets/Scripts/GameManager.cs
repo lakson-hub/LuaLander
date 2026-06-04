@@ -6,12 +6,18 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     
     public static GameManager Instance { get; private set; }
+    
+    public enum GameOverReason {
+        OutOfLives,
+        AllLevelsCompleted,
+    }
 
     private const int MAX_LIVES = 3;
 
     private static int levelNumber = 1;
     private static int totalScore = 0;
     private static int livesRemaining = MAX_LIVES;
+    private static GameOverReason gameOverReason;
 
     public static void ResetStaticData() {
         levelNumber = 1;
@@ -112,7 +118,7 @@ public class GameManager : MonoBehaviour {
         return time;
     }
 
-    public int GetTotalScore() {
+    public static int GetTotalScore() {
         return totalScore;
     }
 
@@ -122,6 +128,7 @@ public class GameManager : MonoBehaviour {
 
         if (GetGameLevel() == null) {
             // No more levels
+            gameOverReason = GameOverReason.AllLevelsCompleted;
             SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
         }
         else {
@@ -135,6 +142,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GoToGameOver() {
+        gameOverReason = GameOverReason.OutOfLives;
         SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
     }
 
@@ -170,5 +178,9 @@ public class GameManager : MonoBehaviour {
         OnLivesChanged?.Invoke(this, new OnLivesChangedEventArgs {
             livesRemaining = livesRemaining
         });
+    }
+
+    public static GameOverReason GetGameOverReason() {
+        return gameOverReason;
     }
 }

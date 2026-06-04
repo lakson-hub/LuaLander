@@ -7,6 +7,7 @@ public class GameOverUI : MonoBehaviour {
 
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private TextMeshProUGUI scoreTextMesh;
+    [SerializeField] private TextMeshProUGUI gameOverTextMesh;
 
     private void Awake() {
         mainMenuButton.onClick.AddListener(() => {
@@ -15,7 +16,14 @@ public class GameOverUI : MonoBehaviour {
     }
 
     private void Start() {
-        scoreTextMesh.text = "FINAL SCORE: " + GameManager.Instance.GetTotalScore().ToString();
+        if (GameManager.GetGameOverReason() == GameManager.GameOverReason.AllLevelsCompleted) {
+            gameOverTextMesh.text = "YOU WON THE GAME!";
+        }
+        else {
+            gameOverTextMesh.text = "GAME OVER!";
+        }
+
+        scoreTextMesh.text = "FINAL SCORE: " + GameManager.GetTotalScore();
         
         mainMenuButton.Select();
     }
