@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
     
     [SerializeField] private List<GameLevel> gameLevelList;
     [SerializeField] private CinemachineCamera cinemachineCamera;
+    [SerializeField] private LanderOutOfMapChecker landerOutOfMapChecker;
 
     private int score;
     private float time;
@@ -47,9 +48,14 @@ public class GameManager : MonoBehaviour {
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
         Lander.Instance.OnLanded += Lander_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
+        Lander.Instance.OnFellOutOfMap += Lander_OnFellOutOfMap;
 
         GameInput.Instance.OnMenuButtonPressed += GameInput_OnMenuButtonPressed;
         LoadCurrentLevel();
+    }
+
+    private void Lander_OnFellOutOfMap(object sender, EventArgs e) {
+        TryHandleLifeLossAfterFailure();
     }
 
     private void GameInput_OnMenuButtonPressed(object sender, EventArgs e) {
@@ -77,6 +83,7 @@ public class GameManager : MonoBehaviour {
         Lander.Instance.transform.position = spawnedGameLevel.GetLanderStartPosition();
         cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.GetCameraStartTargetTransform();
         CinemachineCameraZoom2D.Instance.SetTargetOrthographicSize(spawnedGameLevel.GetZoomedOutOrthographicSize());
+        landerOutOfMapChecker.Setup(spawnedGameLevel.GetMinFallY());
     }
 
     private GameLevel GetGameLevel() {
@@ -91,14 +98,23 @@ public class GameManager : MonoBehaviour {
     
     private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e) {
         if (e.landingType != Lander.LandingType.Success) {
-            LoseLife();
-            if (GetRemainingLives() <= 0) {
-                GoToGameOver();
+            if (TryHandleLifeLossAfterFailure()) {
                 return;
             }
         }
 
         AddScore(e.score);
+    }
+
+    private bool TryHandleLifeLossAfterFailure() {
+        LoseLife();
+
+        if (GetRemainingLives() <= 0) {
+            GoToGameOver();
+            return true;
+        }
+
+        return false;
     }
 
     private void Lander_OnCoinPickup(object sender, EventArgs e) {

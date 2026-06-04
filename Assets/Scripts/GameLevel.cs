@@ -6,6 +6,7 @@ public class GameLevel : MonoBehaviour {
     [SerializeField] private Transform landerStartPositionTransform;
     [SerializeField] private Transform cameraStartTargetTransform;
     [SerializeField] private float zoomedOutOrthographicSize;
+    [SerializeField] private float minFallY = -25f;
 
     public int GetLevelNumber() {
         return levelNumber;
@@ -21,5 +22,9 @@ public class GameLevel : MonoBehaviour {
 
     public float GetZoomedOutOrthographicSize() {
         return zoomedOutOrthographicSize;
+    }
+
+    public float GetMinFallY() {
+        return minFallY;
     }
 }

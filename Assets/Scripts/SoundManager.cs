@@ -28,6 +28,11 @@ public class SoundManager : MonoBehaviour {
         Lander.Instance.OnFuelPickup += Lander_OnFuelPickup;
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
         Lander.Instance.OnLanded += Lander_OnLanded;
+        Lander.Instance.OnFellOutOfMap += Lander_OnFellOutOfMap;
+    }
+
+    private void Lander_OnFellOutOfMap(object sender, EventArgs e) {
+        AudioSource.PlayClipAtPoint(crashAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
     }
 
     private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e) {

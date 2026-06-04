@@ -1591,6 +1591,7 @@ MonoBehaviour:
   - {fileID: 8149912181112703571, guid: 77ab597c87e44ad4a8ee18aea899cb3f, type: 3}
   - {fileID: 8149912181112703571, guid: 4fc0d3cad42e6f74398750da62a533e8, type: 3}
   cinemachineCamera: {fileID: 431474350}
+  landerOutOfMapChecker: {fileID: 1981405146}
 --- !u!1 &582572343
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,6 +4292,7 @@ GameObject:
   - component: {fileID: 1981405143}
   - component: {fileID: 1981405144}
   - component: {fileID: 1981405145}
+  - component: {fileID: 1981405146}
   m_Layer: 0
   m_Name: Lander
   m_TagString: Untagged
@@ -4432,6 +4434,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LanderAudio
   thrusterAudioSource: {fileID: 1558284503}
+--- !u!114 &1981405146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981405139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442e50332c00ec94dbcc49cfbc608e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LanderOutOfMapChecker
 --- !u!1 &1991958872
 GameObject:
   m_ObjectHideFlags: 0

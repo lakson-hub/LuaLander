@@ -19,6 +19,7 @@ public class Lander : MonoBehaviour {
         public State state;
     }
     public event EventHandler<OnLandedEventArgs> OnLanded;
+    public event EventHandler OnFellOutOfMap;
 
     public class OnLandedEventArgs : EventArgs {
         public LandingType landingType;
@@ -222,5 +223,18 @@ public class Lander : MonoBehaviour {
     
     public float GetSpeedY() {
         return landerRigidbody2D.linearVelocityY;
+    }
+
+    public State GetState() {
+        return state;
+    }
+
+    public void TriggerFellOutOfMap() {
+        if (state != State.Normal) {
+            return;
+        }
+        
+        SetState(State.GameOver);
+        OnFellOutOfMap?.Invoke(this, EventArgs.Empty);
     }
 }
