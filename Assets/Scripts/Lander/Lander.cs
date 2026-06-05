@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Lander : MonoBehaviour {
 
@@ -20,6 +19,8 @@ public class Lander : MonoBehaviour {
     }
     public event EventHandler<OnLandedEventArgs> OnLanded;
     public event EventHandler OnFellOutOfMap;
+    public event EventHandler OnWindZoneEntered;
+    public event EventHandler OnWindZoneExited;
 
     public class OnLandedEventArgs : EventArgs {
         public LandingType landingType;
@@ -46,6 +47,7 @@ public class Lander : MonoBehaviour {
     private float fuelAmount;
     private float fuelAmountMax = 10f;
     private State state;
+    private WindZone activeWindZone;
     
     private void Awake() {
         Instance = this;
@@ -74,6 +76,8 @@ public class Lander : MonoBehaviour {
                 
                 break;
             case State.Normal:
+                ApplyWindForce();
+                
                 if (fuelAmount <= 0f) {
                     // No fuel
                     return;
@@ -184,6 +188,28 @@ public class Lander : MonoBehaviour {
         SetState(State.GameOver);
     }
 
+    public void SetWindZone(WindZone windZone) {
+        activeWindZone = windZone;
+        OnWindZoneEntered?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ClearWindZone(WindZone windZone) {
+        if (activeWindZone != windZone) {
+            return;
+        }
+
+        activeWindZone = null;
+        OnWindZoneExited?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void ApplyWindForce() {
+        if (activeWindZone == null) {
+            return;
+        }
+        
+        landerRigidbody2D.AddForce(activeWindZone.GetWindForce() * Time.deltaTime);
+    }
+    
     private void OnTriggerEnter2D(Collider2D collider2D) {
         if (collider2D.gameObject.TryGetComponent(out FuelPickup fuelPickup)) {
             float addFuelAmount = 10f;
