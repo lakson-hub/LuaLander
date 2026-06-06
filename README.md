@@ -4,7 +4,7 @@ LuaLander is a 2D Unity game about piloting a lunar lander, managing fuel, dodgi
 
 ## Languages & Tools
 
-<p align="center">
+<p align="left">
   <img src="https://img.shields.io/badge/Unity-6000.3.15f1-000000?style=for-the-badge&logo=unity&logoColor=white" alt="Unity 6000.3.15f1" height="36" />
   <img src="https://raw.githubusercontent.com/dotnet/vscode-csharp/main/images/csharpIcon.png" alt="C# logo" height="36" />
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/JetBrains_Rider_Icon.svg" alt="JetBrains Rider logo" height="36" />
