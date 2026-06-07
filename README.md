@@ -66,6 +66,7 @@ LuaLander is a 2D Unity game about piloting a lunar lander, managing fuel, dodgi
 
 - Tutorial / inspiration source: [YouTube video](https://www.youtube.com/watch?v=nGKd4yTP3M8&list=PLzDRvYVwl53uAyV0SjL_3d_IoRDiybAdN&index=1)
 - TextMesh Pro font assets and other Unity package content are included in the project
+- Try my game for free: [Unity Play](https://play.unity.com/en/games/38ccc7a9-ed57-4e5d-bb1a-0bb3981522f6/lua-lander), [Itch.io](https://pr0fit.itch.io/lua-lander)
 
 ## Notes
 
